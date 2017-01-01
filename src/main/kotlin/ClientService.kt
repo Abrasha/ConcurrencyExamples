@@ -1,7 +1,7 @@
 /**
  * @author Andrii Abramov on 1/1/17.
  */
-class ClientService<T : Client> {
+class ClientService<T> {
 
     val clients = mutableSetOf<T>()
 
