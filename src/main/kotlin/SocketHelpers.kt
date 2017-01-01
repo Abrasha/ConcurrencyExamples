@@ -13,6 +13,9 @@ class SocketReader(reader: InputStream) {
     fun readLine(): String = inputStream.readUTF()
 }
 
+/**
+ * @author Andrii Abramov on 1/1/17.
+ */
 class SocketWriter(writer: OutputStream) {
 
     val outputStream = DataOutputStream(writer)

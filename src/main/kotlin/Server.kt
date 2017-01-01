@@ -5,6 +5,9 @@ import java.net.Socket
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+/**
+ * @author Andrii Abramov on 1/1/17.
+ */
 class Server {
 
     private val clientService = ClientService<ClientWrapper>()

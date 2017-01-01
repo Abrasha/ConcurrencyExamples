@@ -6,6 +6,9 @@ import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+/**
+ * @author Andrii Abramov on 1/1/17.
+ */
 class Client {
 
     private val executor: ExecutorService = Executors.newCachedThreadPool()
