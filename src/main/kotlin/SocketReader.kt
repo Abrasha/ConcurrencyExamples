@@ -10,9 +10,7 @@ class SocketReader(reader: InputStream) {
 
     val inputStream = DataInputStream(reader)
 
-    fun readLine(): String {
-        return inputStream.readUTF()
-    }
+    fun readLine(): String = inputStream.readUTF()
 }
 
 class SocketWriter(writer: OutputStream) {
@@ -24,7 +22,5 @@ class SocketWriter(writer: OutputStream) {
         flush()
     }
 
-    fun flush() {
-        outputStream.flush()
-    }
+    fun flush() = outputStream.flush()
 }

@@ -1,6 +1,10 @@
 import java.net.Socket
 import java.net.SocketException
 import java.util.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+
+private val executor: ExecutorService = Executors.newCachedThreadPool()
 
 fun main(args: Array<String>) {
     connectToServer()
@@ -30,14 +34,16 @@ fun connectToServer() {
             else -> sendMessage(messageToServer, outputStream)
         }
     }
+
+    executor.shutdown()
 }
 
 private fun startListeningServer(socket: Socket) {
-    Thread({ readServer(socket) }).start()
+    startThread { readServer(socket) }
 }
 
 private fun sendMessage(messageToServer: String, outputStream: SocketWriter) {
-    Thread({ sendMessageToServer(messageToServer, outputStream) }).start()
+    executor.execute { sendMessageToServer(messageToServer, outputStream) }
 }
 
 fun sendMessageToServer(messageToServer: String, outputStream: SocketWriter) {
@@ -53,6 +59,5 @@ fun readServer(socket: Socket) {
         } catch (e: SocketException) {
             println(e.message)
         }
-
     }
 }
