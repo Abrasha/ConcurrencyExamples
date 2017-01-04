@@ -1,3 +1,5 @@
+package ua.aabramov.socket.chat
+
 import java.net.Socket
 
 /**

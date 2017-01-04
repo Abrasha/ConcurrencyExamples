@@ -1,7 +1,10 @@
-import ServerConfig.DEFAULT_SERVER_PORT
+package ua.aabramov.socket.chat
+
+import ua.aabramov.socket.chat.ServerConfig.DEFAULT_SERVER_PORT
 import java.io.EOFException
 import java.net.ServerSocket
 import java.net.Socket
+import java.util.concurrent.CountDownLatch
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -24,7 +27,7 @@ class Server {
     }
 
     private fun handleClient(client: Socket) {
-        println("ClientWrapper connected: ${client.inetAddress}")
+        println("Client connected: ${client.inetAddress}")
         val inputStream = SocketReader(client.inputStream)
 
         val clientName = inputStream.readLine()
@@ -45,15 +48,22 @@ class Server {
         clientService.removeClient(clientClass)
 
         sendMessage(Message(clientClass, "$clientName left this chat"))
-
     }
 
     private fun sendMessage(message: Message) {
+        val latch = CountDownLatch(clientService.clients.size)
         clientService.clients.forEach {
             executor.execute {
-                sendMessageToClient(SocketWriter(it.clientSocket.outputStream), message)
+                try {
+                    sendMessageToClient(SocketWriter(it.clientSocket.outputStream), message)
+                } finally {
+                    latch.countDown()
+                }
             }
         }
+
+        // waiting while all messages will be sent to follow the order
+        latch.await()
     }
 
     private fun sendMessageToClient(outputStream: SocketWriter, message: Message) {

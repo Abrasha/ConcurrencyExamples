@@ -1,4 +1,6 @@
-import ServerConfig.DEFAULT_SERVER_PORT
+package ua.aabramov.socket.chat
+
+import ua.aabramov.socket.chat.ServerConfig.DEFAULT_SERVER_PORT
 import java.net.InetAddress
 import java.net.Socket
 import java.net.SocketException
