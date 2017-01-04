@@ -1,5 +1,4 @@
 *.class
 .idea/
-*.jar
 build/
 .gradle/
